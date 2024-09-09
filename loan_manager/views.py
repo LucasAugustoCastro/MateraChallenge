@@ -1,9 +1,6 @@
-from rest_framework.views import APIView
-
 from rest_framework.response import Response
-from rest_framework import generics, viewsets, mixins
+from rest_framework import viewsets
 from rest_framework.decorators import action
-from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Loan, Payment
@@ -39,46 +36,3 @@ class PaymentViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         return Payment.objects.filter(loan__user=user)
-
-
-
-# class UsersAPIView(generics.ListCreateAPIView):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
-# class UserAPIView(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
-    
-
-# class LoansAPIView(generics.ListCreateAPIView):
-#     queryset = Loan.objects.all()
-#     serializer_class = LoanSerializer
-
-#     def get_queryset(self):
-#         print("aaaaaaaa")
-#         user_id = self.kwargs.get('user_pk')
-#         if user_id:
-#             return self.queryset.filter(user_id = user_id )
-        
-#         return self.queryset.all()
-
-# class LoanAPIView(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = Loan.objects.all()
-#     serializer_class = LoanSerializer
-#     def get_object(self):
-#         user_id = self.kwargs.get('user_pk')
-#         if user_id:
-#             return get_object_or_404(self.get_queryset(), user_id = user_id, pk=self.kwargs.get('loan_pk'))
-#         return get_object_or_404(self.get_queryset(), pk=self.kwargs.get('loan_pk'))
-
-
-# class LoanAPIView(APIView):
-#     def get(self, request):
-#         loans = Loan.objects.all()
-#         serializer = LoanSerializer(loans, many=True)
-#         return Response(serializer.data)
-# class PaymentAPIView(APIView):
-#     def get(self, request):
-#         payments = Payment.objects.all()
-#         serializer = PaymentSerializer(payments, many=True)
-#         return Response(serializer.data)
